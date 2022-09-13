@@ -1,0 +1,65 @@
+﻿@model School.Models.CalificacionesView
+
+@{
+    ViewData["Title"] = "Editar nota";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container">
+    <div class="col-sm-12">
+        <h1>Editar nota</h1>
+    </div>
+    <br />
+    <div class="row">
+       <div class="col-sm-10">
+           <form method="post" asp-action="Edit">
+               <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+               <div class="form-group">
+                   <label asp-for="EstudianteInfo.Nombre" class="control-label" ></label><br />
+                   <input asp-for="EstudianteInfo.IdEstudiante" type="hidden" />
+                   <input asp-for="EstudianteInfo.Nombre" class="form-control" readonly="true"/>
+                   <span asp-validation-for="EstudianteInfo.Nombre" class="text-danger"></span>
+               </div>
+               <div class="form-group">
+                   <label asp-for="MateriaInfo.Descripcion" class="control-label" ></label><br />
+                   <input asp-for="MateriaInfo.IdMateria" type="hidden" />
+                   <input asp-for="MateriaInfo.Descripcion" class="form-control" readonly="true"/>
+                   <span asp-validation-for="MateriaInfo.Descripcion" class="text-danger"></span>
+               </div>
+               <div class="form-group">
+                   <label asp-for="AcademicYear" class="control-label" ></label>
+                   <input asp-for="AcademicYear" class="form-control" readonly="true"/>
+                   <span asp-validation-for="AcademicYear" class="text-danger"></span>
+               </div>
+               <div class="form-group">
+                   <label asp-for="AcademicSemestre" class="control-label" ></label>
+                   <input asp-for="AcademicSemestre" class="form-control" readonly="true"/>
+                   <span asp-validation-for="AcademicSemestre" class="text-danger"></span>
+               </div>
+               <div class="form-group">
+                   <label asp-for="Nota" class="control-label" ></label>
+                   <input type="text" asp-for="Nota" class="form-control"/>
+                   <span asp-validation-for="Nota" class="text-danger"></span>
+               </div>
+               <div class="form-group">
+                   <input type="submit" value="Actualizar nota" class="btn btn-primary"/>
+               </div>
+           </form>
+       </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $(function () { 
+            $("#Nota").on("keypress keyup blur", function (event) { 
+                $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+                if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                    event.preventDefault();
+                }
+            });
+        })
+    </script>
+    @{<partial name="_ValidationScriptsPartial" />}
+}
+

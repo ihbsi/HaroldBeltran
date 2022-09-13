@@ -1,0 +1,70 @@
+﻿@model IEnumerable<School.Models.CalificacionesView>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    @if (TempData["mensaje"] != null)
+    {
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            @TempData["mensaje"]
+            <button type="button" class="close" datA-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+    <div class="row">
+    <div class="col-sm-10">
+        <h1>Calificaciones</h1>
+    </div>
+    <div class="col-sm-2">
+        <a class="btn btn-success d-block" asp-controller="Calificaciones" asp-action="Create">Agregar nota</a>
+    </div>
+    </div>
+    <div class="row">
+        @if(Model.Count() > 0)
+        {
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <td>@Html.DisplayNameFor(m=>m.EstudianteInfo.Identificacion)</td>
+                        <td>@Html.DisplayNameFor(m=>m.EstudianteInfo.Nombre)</td>
+                        <td>@Html.DisplayNameFor(m=>m.MateriaInfo.Descripcion)</td>
+                        <td>Periodo</td>
+                        <td>@Html.DisplayNameFor(m=>m.Nota)</td>
+                        <td>Acciones</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.EstudianteInfo.Identificacion</td>
+                            <td>@item.EstudianteInfo.Nombre</td>
+                            <td>@item.MateriaInfo.Descripcion</td>
+                            <td>@item.AcademicYear - @item.AcademicSemestre</td>
+                            <td>@item.Nota</td>
+                            <td>
+                                <a asp-controller="Calificaciones" asp-action="Edit" class="btn btn-info"
+                                    asp-route-academicYear="@item.AcademicYear"
+                                    asp-route-idEstudiante="@item.EstudianteInfo.IdEstudiante"
+                                    asp-route-idMateria="@item.MateriaInfo.IdMateria"
+                                    asp-route-academicSemestre="@item.AcademicSemestre">Editar</a>
+                                <a asp-controller="Calificaciones" asp-action="Delete" class="btn btn-danger"
+                                    asp-route-academicYear="@item.AcademicYear"
+                                    asp-route-idEstudiante="@item.EstudianteInfo.IdEstudiante"
+                                    asp-route-idMateria="@item.MateriaInfo.IdMateria"
+                                    asp-route-academicSemestre="@item.AcademicSemestre" >Eliminar</a>
+                            </td> 
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>No existen registros.</p>
+        }
+    </div>
+</div>
